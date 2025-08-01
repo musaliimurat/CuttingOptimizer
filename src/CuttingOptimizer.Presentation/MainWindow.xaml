@@ -1,0 +1,294 @@
+﻿<Window x:Class="CuttingOptimizer.Presentation.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Cutting Optimizer Pro" Height="800" Width="1200"
+        WindowStartupLocation="CenterScreen">
+    
+    <Window.Resources>
+        <Style x:Key="ModernButton" TargetType="Button">
+            <Setter Property="Background" Value="#2196F3"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="15,8"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                                CornerRadius="4" 
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" 
+                                            VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#1976D2"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#0D47A1"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
+        <Style x:Key="ModernTextBox" TargetType="TextBox">
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="#BDBDBD"/>
+            <Setter Property="Padding" Value="8,6"/>
+            <Setter Property="FontSize" Value="14"/>
+        </Style>
+        
+        <Style x:Key="ModernLabel" TargetType="Label">
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Foreground" Value="#424242"/>
+            <Setter Property="Margin" Value="0,0,0,5"/>
+        </Style>
+    </Window.Resources>
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        
+        <!-- Header -->
+        <Border Grid.Row="0" Background="#1976D2" Padding="20,15">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                
+                <StackPanel Grid.Column="0">
+                    <TextBlock Text="Xəlil abi üçün" 
+                               FontSize="24" 
+                               FontWeight="Bold" 
+                               Foreground="White"/>
+                    <TextBlock Text="Xəlil Abi üçün yazmışam - kəsilmə planı optimizasiyası" 
+                               FontSize="14" 
+                               Foreground="#E3F2FD" 
+                               Margin="0,5,0,0"/>
+                </StackPanel>
+                
+                <StackPanel Grid.Column="1" Orientation="Horizontal">
+                    <Button Content="Import Data" 
+                            Style="{StaticResource ModernButton}"
+                            Click="ImportData_Click"
+                            Margin="0,0,10,0"/>
+                    <Button Content="Optimize" 
+                            Style="{StaticResource ModernButton}"
+                            Click="Optimize_Click"
+                            Background="#4CAF50"
+                            Margin="0,0,10,0"/>
+                    <Button Content="Export" 
+                            Style="{StaticResource ModernButton}"
+                            Click="Export_Click"
+                            Background="#FF9800"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+        
+        <!-- Main Content -->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="300"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            
+            <!-- Settings Panel -->
+            <Border Grid.Column="0" 
+                    Background="#FAFAFA" 
+                    BorderBrush="#E0E0E0" 
+                    BorderThickness="0,0,1,0">
+                <ScrollViewer>
+                    <StackPanel Margin="20">
+                        <TextBlock Text="Optimization Settings" 
+                                   FontSize="18" 
+                                   FontWeight="Bold" 
+                                   Margin="0,0,0,20"/>
+                        
+                        <!-- Algorithm Settings -->
+                        <GroupBox Header="Algorithm Settings" Margin="0,0,0,20">
+                            <StackPanel Margin="10">
+                                <CheckBox x:Name="EnableRotationCheckBox" 
+                                          Content="Enable Rotation" 
+                                          IsChecked="True" 
+                                          Margin="0,5"/>
+                                <CheckBox x:Name="EnableMultiThreadingCheckBox" 
+                                          Content="Enable Multi-threading" 
+                                          IsChecked="True" 
+                                          Margin="0,5"/>
+                                <CheckBox x:Name="EnableHeuristicCheckBox" 
+                                          Content="Enable Heuristic Pre-arrangement" 
+                                          IsChecked="True" 
+                                          Margin="0,5"/>
+                                
+                                <Label Content="Time Limit (seconds):" 
+                                       Style="{StaticResource ModernLabel}"/>
+                                <TextBox x:Name="TimeLimitTextBox" 
+                                         Text="300" 
+                                         Style="{StaticResource ModernTextBox}"/>
+                                
+                                <Label Content="Max Threads:" 
+                                       Style="{StaticResource ModernLabel}"/>
+                                <TextBox x:Name="MaxThreadsTextBox" 
+                                         Text="8" 
+                                         Style="{StaticResource ModernTextBox}"/>
+                            </StackPanel>
+                        </GroupBox>
+                        
+                        <!-- Heuristic Strategy -->
+                        <GroupBox Header="Heuristic Strategy" Margin="0,0,0,20">
+                            <StackPanel Margin="10">
+                                <ComboBox x:Name="HeuristicStrategyComboBox" 
+                                          SelectedIndex="0" 
+                                          Margin="0,5">
+                                    <ComboBoxItem Content="Largest First"/>
+                                    <ComboBoxItem Content="Smallest First"/>
+                                    <ComboBoxItem Content="Area Descending"/>
+                                    <ComboBoxItem Content="Area Ascending"/>
+                                    <ComboBoxItem Content="Perimeter Descending"/>
+                                    <ComboBoxItem Content="Perimeter Ascending"/>
+                                    <ComboBoxItem Content="Random"/>
+                                </ComboBox>
+                            </StackPanel>
+                        </GroupBox>
+                        
+                        <!-- Performance Monitoring -->
+                        <GroupBox Header="Performance Monitoring" Margin="0,0,0,20">
+                            <StackPanel Margin="10">
+                                <CheckBox x:Name="EnablePerformanceMonitoringCheckBox" 
+                                          Content="Enable Performance Monitoring" 
+                                          IsChecked="True" 
+                                          Margin="0,5"/>
+                                <CheckBox x:Name="EnableDetailedLoggingCheckBox" 
+                                          Content="Enable Detailed Logging" 
+                                          IsChecked="False" 
+                                          Margin="0,5"/>
+                            </StackPanel>
+                        </GroupBox>
+                        
+                        <!-- Export Settings -->
+                        <GroupBox Header="Export Settings" Margin="0,0,0,20">
+                            <StackPanel Margin="10">
+                                <CheckBox x:Name="GenerateVisualizationCheckBox" 
+                                          Content="Generate Visualization" 
+                                          IsChecked="True" 
+                                          Margin="0,5"/>
+                                <CheckBox x:Name="GenerateReportCheckBox" 
+                                          Content="Generate Report" 
+                                          IsChecked="True" 
+                                          Margin="0,5"/>
+                                
+                                <Label Content="Export Format:" 
+                                       Style="{StaticResource ModernLabel}"/>
+                                <ComboBox x:Name="ExportFormatComboBox" 
+                                          SelectedIndex="0" 
+                                          Margin="0,5">
+                                    <ComboBoxItem Content="SVG"/>
+                                    <ComboBoxItem Content="PNG"/>
+                                    <ComboBoxItem Content="PDF"/>
+                                    <ComboBoxItem Content="JSON"/>
+                                </ComboBox>
+                            </StackPanel>
+                        </GroupBox>
+                    </StackPanel>
+                </ScrollViewer>
+            </Border>
+            
+            <!-- Visualization and Results -->
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="200"/>
+                </Grid.RowDefinitions>
+                
+                <!-- Progress and Status -->
+                <Border Grid.Row="0" 
+                        Background="#E8F5E8" 
+                        BorderBrush="#4CAF50" 
+                        BorderThickness="0,0,0,1" 
+                        Padding="20,15">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        
+                        <StackPanel Grid.Column="0">
+                            <TextBlock x:Name="StatusTextBlock" 
+                                       Text="Ready to optimize" 
+                                       FontSize="16" 
+                                       FontWeight="SemiBold"/>
+                            <ProgressBar x:Name="OptimizationProgressBar" 
+                                         Height="6" 
+                                         Margin="0,10,0,0" 
+                                         Visibility="Collapsed"/>
+                        </StackPanel>
+                        
+                        <StackPanel Grid.Column="1" Orientation="Horizontal">
+                            <TextBlock x:Name="UtilizationTextBlock" 
+                                       Text="Utilization: --" 
+                                       FontSize="14" 
+                                       FontWeight="SemiBold" 
+                                       VerticalAlignment="Center" 
+                                       Margin="0,0,20,0"/>
+                            <TextBlock x:Name="PiecesTextBlock" 
+                                       Text="Pieces: --" 
+                                       FontSize="14" 
+                                       FontWeight="SemiBold" 
+                                       VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+                
+                <!-- Visualization Canvas -->
+                <Border Grid.Row="1" 
+                        Background="White" 
+                        BorderBrush="#E0E0E0" 
+                        BorderThickness="1" 
+                        Margin="20">
+                    <ScrollViewer x:Name="VisualizationScrollViewer" 
+                                  HorizontalScrollBarVisibility="Auto" 
+                                  VerticalScrollBarVisibility="Auto">
+                        <Canvas x:Name="VisualizationCanvas" 
+                                Background="White"/>
+                    </ScrollViewer>
+                </Border>
+                
+                <!-- Results and Logs -->
+                <Grid Grid.Row="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    
+                    <!-- Results -->
+                    <GroupBox Grid.Column="0" Header="Optimization Results" Margin="10">
+                        <ScrollViewer>
+                            <StackPanel x:Name="ResultsStackPanel" Margin="10">
+                                <TextBlock Text="No optimization results yet" 
+                                           Foreground="#757575" 
+                                           FontStyle="Italic"/>
+                            </StackPanel>
+                        </ScrollViewer>
+                    </GroupBox>
+                    
+                    <!-- Performance Logs -->
+                    <GroupBox Grid.Column="1" Header="Performance Logs" Margin="10">
+                        <ScrollViewer>
+                            <StackPanel x:Name="LogsStackPanel" Margin="10">
+                                <TextBlock Text="No logs yet" 
+                                           Foreground="#757575" 
+                                           FontStyle="Italic"/>
+                            </StackPanel>
+                        </ScrollViewer>
+                    </GroupBox>
+                </Grid>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>

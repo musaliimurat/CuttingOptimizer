@@ -1,0 +1,97 @@
+{
+  "stocks": [
+    {
+      "name": "Plywood Sheet 1",
+      "width": 2440,
+      "height": 1220,
+      "quantity": 2,
+      "material": "Plywood",
+      "thickness": 18,
+      "cost": 25.0
+    },
+    {
+      "name": "Plywood Sheet 2",
+      "width": 2440,
+      "height": 1220,
+      "quantity": 1,
+      "material": "Plywood",
+      "thickness": 18,
+      "cost": 25.0
+    }
+  ],
+  "pieces": [
+    {
+      "name": "Shelf A",
+      "width": 600,
+      "height": 400,
+      "quantity": 4,
+      "allowRotation": true,
+      "allowedRotations": "All"
+    },
+    {
+      "name": "Shelf B",
+      "width": 800,
+      "height": 300,
+      "quantity": 2,
+      "allowRotation": true,
+      "allowedRotations": "All"
+    },
+    {
+      "name": "Side Panel",
+      "width": 800,
+      "height": 600,
+      "quantity": 4,
+      "allowRotation": true,
+      "allowedRotations": "All"
+    },
+    {
+      "name": "Back Panel",
+      "width": 600,
+      "height": 800,
+      "quantity": 2,
+      "allowRotation": true,
+      "allowedRotations": "All"
+    },
+    {
+      "name": "Drawer Front",
+      "width": 400,
+      "height": 200,
+      "quantity": 6,
+      "allowRotation": true,
+      "allowedRotations": "All"
+    },
+    {
+      "name": "Drawer Side",
+      "width": 400,
+      "height": 150,
+      "quantity": 12,
+      "allowRotation": true,
+      "allowedRotations": "All"
+    },
+    {
+      "name": "Drawer Bottom",
+      "width": 380,
+      "height": 380,
+      "quantity": 6,
+      "allowRotation": true,
+      "allowedRotations": "All"
+    }
+  ],
+  "settings": {
+    "enableRotation": true,
+    "allowedRotations": "All",
+    "enableMultiThreading": true,
+    "maxThreads": 8,
+    "timeLimitSeconds": 300,
+    "gapTolerance": 0.01,
+    "enableSymmetryBreaking": true,
+    "enableHeuristicPreArrangement": true,
+    "heuristicStrategy": "LargestFirst",
+    "enableGreedyPlacement": true,
+    "enablePerformanceMonitoring": true,
+    "enableDetailedLogging": false,
+    "generateVisualization": true,
+    "generateReport": true,
+    "exportFormat": "SVG"
+  }
+} 
